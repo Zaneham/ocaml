@@ -138,10 +138,18 @@ CAMLprim value caml_bswap16(value v)
 #ifdef ARCH_SIXTYFOUR
 #define CAML_BUILTIN_CLZ __builtin_clzll
 #define CAML_BUILTIN_CTZ __builtin_ctzll
-#define CAML_BUILTIN_POPCOUNT __builtin_popcountll
 #else
 #define CAML_BUILTIN_CLZ __builtin_clz
 #define CAML_BUILTIN_CTZ __builtin_ctz
+#endif
+#endif
+
+/* Without a popcount instruction GCC lowers the builtin to a libgcc call,
+   which a flexlink DLL cannot resolve at load time. */
+#if defined(__POPCNT__) || defined(__aarch64__)
+#ifdef ARCH_SIXTYFOUR
+#define CAML_BUILTIN_POPCOUNT __builtin_popcountll
+#else
 #define CAML_BUILTIN_POPCOUNT __builtin_popcount
 #endif
 #endif
