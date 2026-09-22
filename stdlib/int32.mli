@@ -182,18 +182,14 @@ val unsigned_to_int : int32 -> int option
 
     @since 4.08 *)
 
-external of_float : float -> int32
-  = "caml_int32_of_float" "caml_int32_of_float_unboxed"
-  [@@unboxed] [@@noalloc]
+external of_float : float -> int32 = "%int32_of_float"
 (** Convert the given floating-point number to a 32-bit integer,
    discarding the fractional part (truncate towards 0).
    If the truncated floating-point number is outside the range
    \[{!Int32.min_int}, {!Int32.max_int}\], no exception is raised, and
    an unspecified, platform-dependent integer is returned. *)
 
-external to_float : int32 -> float
-  = "caml_int32_to_float" "caml_int32_to_float_unboxed"
-  [@@unboxed] [@@noalloc]
+external to_float : int32 -> float = "%int32_to_float"
 (** Convert the given 32-bit integer to a floating-point number. *)
 
 external of_string : string -> int32 = "caml_int32_of_string"
